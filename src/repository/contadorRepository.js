@@ -1,9 +1,9 @@
-import connection from "../repository/connections.js";
+import conexao from "../repository/connections.js";
 
 export async function ContadorAdicionar(parms){
     const comando = ` update TB_salas set NR_pessoas = NR_pessoas + 1 where ID_salas = ? ;`
 
-    const dados = await connection.query(comando, [parms]);
+    const dados = await conexao.query(comando, [parms]);
 
     const resposta = dados.affectedRows;
 
@@ -13,7 +13,7 @@ export async function ContadorAdicionar(parms){
 export async function ContadorRemover(parms){
     const comando = ` update TB_salas set NR_pessoas = NR_pessoas  - 1  where ID_salas = ? and TB_salas.NR_pessoas > 0;`
 
-    const dados = await connection.query(comando, [parms]);  
+    const dados = await conexao.query(comando, [parms]);  
 
     const resposta = dados.affectedRows;
 
@@ -21,12 +21,10 @@ export async function ContadorRemover(parms){
 }
 
 
-
-
 export async function get(){
-    const comando = 'select * from TB_salas'
+    const comando = 'select * from TB_salas';
 
-    const resposta = await connection.query(comando);
+    const resposta = await conexao.query(comando);
     
     return resposta
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { inserir, consultarClientes, verificarDuplicado } from '../repository/inscricaoRepository.js'
+import { inserir, consultarClientes, verificarDuplicado, selecionarTodos, selecionarVisitantes } from '../repository/inscricaoRepository.js'
 
 
 let endpoint = Router();
@@ -49,5 +49,42 @@ endpoint.get('/consulta', async (req, resp) => {
     resp.send(consulta)
 
 })
+
+// Endpoints para home adm
+endpoint.get('/inscricao/quantidade', async (req,resp) => {
+
+    try{
+
+        const respostaAPI= await selecionarTodos();
+
+        resp.send(respostaAPI.length.toString());
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
+
+endpoint.get('/inscricao/visitantes', async (req,resp) => {
+
+    try{
+
+        const respostaAPI= await selecionarVisitantes();
+
+        resp.send(respostaAPI.length.toString());
+    }
+
+    catch(err){
+
+        resp.status(404).send({
+
+            erro:err.message
+        });
+    }
+});
 
 export default endpoint;
